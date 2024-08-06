@@ -84,3 +84,9 @@ git merge origin/master
 ```
 
 then resolve any conflict
+
+## Fetching submodules in main project
+After clonning the main project you need to use this command to get submodules too:
+```
+git submodule update --init
+```
