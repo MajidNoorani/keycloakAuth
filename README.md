@@ -69,13 +69,31 @@ urlpatterns = [
 ```
 
 **Note**
+
 You need to change the name of the app in [apps.py](keycloakAuth/apps.py) if you change the name of the app (By default the name of the app is set **keycloakUs**)
 
 3. Migrate to apply changes on database
 ```
 python manage.py migrate
 ```
+4. In any view of your apis that you want authentication, add this line of code:
+```
+from rest_framework.authentication import TokenAuthentication
+from <your_keycloakAuth_app_name>.keycloakAuth import authentication
 
+...
+
+authentication_classes = [TokenAuthentication]
+permission_classes = [authentication.IsKeycloakAuthenticated]
+
+
+```
+5. Configure your keycloak and setup a **Realm** and a **Client**. Be aware that you need to enable credentials for your client to get the client secret from it.
+
+
+**Note**
+
+in your Django models, you cannot use a foreign key to users. Since this module is developed for a modular monolithic architecure, you can save the user id that keycloak gives you (**sub**) in your models to find the relation between your users and records in any model.
 ## Get new updates
 
 ```
