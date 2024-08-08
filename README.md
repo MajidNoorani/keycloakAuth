@@ -3,11 +3,11 @@
 Use this module as a submodule in your project
 
 ## Installation
-Install al the required packages which are in [requirements.txt](requirements.txt)
+Install all the required packages which are in [requirements.txt](requirements.txt)
 
 ## Setup and Configuration
 
-you need to add these codes in proper directory:
+you need to add these codes in proper directories:
 
 1. <your_project>/<your_project_main_app>/settings.py
 ```
@@ -41,15 +41,15 @@ SPECTACULAR_SETTINGS = {
 }
 
 ```
-Also we need to configure django to make it possible to make connection to keycloak
-so we add these configurations too:
+Also we need to configure django to make it possible to make connection to keycloak.
+So we add these configurations too:
 ```
-KEYCLOAK_SERVER_URL = os.environ.get("KEYCLOAK_SERVER_URL", default='https://keycloak.daycarehub.info')
-KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM", default='BlogServices')
-KEYCLOAK_CLIENT_ID = os.environ.get("KEYCLOAK_CLIENT_ID", default='BlogClient')
-KEYCLOAK_CLIENT_SECRET = os.environ.get("KEYCLOAK_CLIENT_SECRET", default='AxFZy4V9Q0SybtYNAhKxRLDzD6b042aV')
-KEYCLOAK_REDIRECT_URI = os.environ.get("KEYCLOAK_REDIRECT_URI", default='http://localhost:8000/api/kc_auth/callback')
-FRONT_URL = os.environ.get("FRONT_URL", default="https://daycarehub.info")  # front url of the project
+KEYCLOAK_SERVER_URL = os.environ.get("KEYCLOAK_SERVER_URL", default='https://keycloak.domain.com')
+KEYCLOAK_REALM = os.environ.get("KEYCLOAK_REALM", default='<YourRealm>')
+KEYCLOAK_CLIENT_ID = os.environ.get("KEYCLOAK_CLIENT_ID", default='<YourClient>')
+KEYCLOAK_CLIENT_SECRET = os.environ.get("KEYCLOAK_CLIENT_SECRET", default='changeme')
+KEYCLOAK_REDIRECT_URI = os.environ.get("KEYCLOAK_REDIRECT_URI", default='http://domain.com/api/keycloak-auth/callback')
+FRONT_URL = os.environ.get("FRONT_URL", default="https://domain.com")  # front url of the project
 ```
 
 
@@ -71,7 +71,7 @@ urlpatterns = [
 **Note**
 You need to change the name of the app in [apps.py](keycloakAuth/apps.py) if you change the name of the app (By default the name of the app is set **keycloakUs**)
 
-Migrate to apply changes on database
+3. Migrate to apply changes on database
 ```
 python manage.py migrate
 ```
@@ -88,5 +88,5 @@ then resolve any conflict
 ## Fetching submodules in main project
 After clonning the main project you need to use this command to get submodules too:
 ```
-git submodule update --init
+git submodule update
 ```
