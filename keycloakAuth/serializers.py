@@ -33,7 +33,10 @@ class UserInfoSerializer(serializers.Serializer):
     def get_profile_picture(self, obj):
         try:
             user_profile = UserProfile.objects.get(uuid=obj['sub'])
-            return user_profile.profilePicture.url
+            if user_profile.profilePicture and hasattr(user_profile.profilePicture, 'url'):
+                return user_profile.profilePicture.url
+            else:
+                return None
         except UserProfile.DoesNotExist:
             return None
 
@@ -53,6 +56,7 @@ class SimpleLoginSerializer(serializers.Serializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = UserProfile
         fields = ['uuid', 'profilePicture', 'createdDate', 'updatedDate']

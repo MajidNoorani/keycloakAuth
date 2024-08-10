@@ -14,6 +14,7 @@ from keycloak.exceptions import (
 from drf_spectacular.utils import extend_schema, OpenApiResponse
 from .models import UserProfile
 from django.utils import timezone
+from rest_framework.parsers import MultiPartParser
 
 
 class KeycloakLoginView(GenericAPIView):
@@ -32,6 +33,7 @@ class KeycloakLoginView(GenericAPIView):
             'redirect_uri': settings.KEYCLOAK_REDIRECT_URI,
         }
         url = f"{keycloak_auth_url}?{urlencode(params)}"
+        print(url)
         return redirect(url)
 
 
@@ -136,6 +138,7 @@ class UserInfoView(GenericAPIView):
     """Get authenticated user information."""
     serializer_class = serializers.UserInfoSerializer
     permission_classes = [IsKeycloakAuthenticated]
+
     # authentication_classes = [authentication.KeycloakAuthentication,]
 
     def get(self, request, *args, **kwargs):
@@ -242,7 +245,7 @@ class UserProfileView(mixins.CreateModelMixin,
     """View for manage user profile side fields"""
     serializer_class = serializers.UserProfileSerializer
     permission_classes = [IsKeycloakAuthenticated]
-
+    parser_classes = [MultiPartParser]
     queryset = UserProfile.objects.all()
 
     def perform_create(self, serializer):
