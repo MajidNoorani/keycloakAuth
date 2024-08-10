@@ -20,8 +20,8 @@ class KeycloakAuthentication(BaseAuthentication):
 
 
 class KeycloakAuthenticationScheme(OpenApiAuthenticationExtension):
-    target_class = 'kc_auth.authentication.KeycloakAuthentication'
-    name = 'KeycloakAuthentication'
+    target_class = 'keycloakAuth.keycloakAuth.authentication.KeycloakAuthentication'
+    name = 'BearerAuth'
 
     def get_security_definition(self, auto_schema):
         return {
