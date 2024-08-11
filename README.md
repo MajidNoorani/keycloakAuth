@@ -75,7 +75,21 @@ urlpatterns = [
 ]
 
 ```
+3. In any view of your applications use these codes to ensure authentiction by keycloak
+```
+from <your_keycloakAuth_app_name>.keycloakAuth.authentication import (
+    KeycloakAuthentication,
+    IsKeycloakAuthenticated,
+)
 
+...
+class YourViewSet(viewsets.GenericViewSet):
+    authentication_classes = [KeycloakAuthentication]
+    permission_classes = [IsKeycloakAuthenticated]
+    ...
+
+```
+for AllowAny and SAFE_METHODS you can still use builtin rest framework methods and classes.
 **Note**
 You need to change the name of the app in [apps.py](keycloakAuth/apps.py) if you change the name of the app (By default the name of the app is set **keycloakUs**)
 
