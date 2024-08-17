@@ -18,7 +18,6 @@ from rest_framework.parsers import MultiPartParser
 from django.http.response import HttpResponseRedirect
 
 
-
 class KeycloakLoginView(GenericAPIView):
     """Redirects to Keycloak login page."""
 
@@ -61,7 +60,8 @@ class KeycloakCallbackView(GenericAPIView):
             })
 
             if serializer.is_valid():
-                response = HttpResponseRedirect(redirect_to=settings.BASE_FRONTEND_URL)
+                response = HttpResponseRedirect(
+                    redirect_to=settings.BASE_FRONTEND_URL)
 
                 cookie_max_age = 3600  # 60 minutes
                 for key, value in serializer.validated_data.items():
@@ -75,7 +75,6 @@ class KeycloakCallbackView(GenericAPIView):
                         domain=f'.{settings.BASE_FRONTEND_URL.split("//")[1]}',
                         # path='/'
                     )
-
                 return response
             else:
                 return Response(serializer.errors, status=400)
