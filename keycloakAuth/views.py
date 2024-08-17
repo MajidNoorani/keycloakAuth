@@ -15,6 +15,8 @@ from drf_spectacular.utils import extend_schema, OpenApiResponse
 from .models import UserProfile
 from django.utils import timezone
 from rest_framework.parsers import MultiPartParser
+from django.http.response import HttpResponseRedirect
+
 
 
 class KeycloakLoginView(GenericAPIView):
@@ -59,7 +61,22 @@ class KeycloakCallbackView(GenericAPIView):
             })
 
             if serializer.is_valid():
-                return Response(serializer.data)
+                response = HttpResponseRedirect(redirect_to=settings.BASE_FRONTEND_URL)
+
+                cookie_max_age = 3600  # 60 minutes
+                for key, value in serializer.validated_data.items():
+                    response.set_cookie(
+                        key=key,
+                        value=value,
+                        max_age=cookie_max_age,
+                        # httponly=True,
+                        secure=True,
+                        samesite='Lax',
+                        domain=f'.{settings.BASE_FRONTEND_URL.split("//")[1]}',
+                        # path='/'
+                    )
+
+                return response
             else:
                 return Response(serializer.errors, status=400)
         except KeycloakPostError:

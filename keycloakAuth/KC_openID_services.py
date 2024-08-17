@@ -1,5 +1,6 @@
 from keycloak import KeycloakOpenID
 from django.conf import settings
+from time import sleep
 # Configure client
 # For versions older than 18 /auth/ must be added at the end of the server_url.
 keycloak_openid = KeycloakOpenID(server_url=settings.KEYCLOAK_SERVER_URL,
@@ -8,8 +9,13 @@ keycloak_openid = KeycloakOpenID(server_url=settings.KEYCLOAK_SERVER_URL,
                                  client_secret_key=settings.KEYCLOAK_CLIENT_SECRET,
                                  proxies={"http://": None, "https://": None, })
 
-
-config_well_known = keycloak_openid.well_known()
+while(True):
+    try:
+        config_well_known = keycloak_openid.well_known()
+        break
+    except:
+        print("Cannot connect to keycloak. Retrying in 1 sec ...")
+        sleep(1)
 
 
 def get_code():
