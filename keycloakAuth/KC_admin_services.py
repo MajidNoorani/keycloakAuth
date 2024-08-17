@@ -7,16 +7,16 @@ import logging
 logger = logging.getLogger(__name__)
 # Configure client
 
-print(settings.KEYCLOAK_REALM_NAME)
 keycloak_connection = KeycloakOpenIDConnection(
                         server_url=settings.KEYCLOAK_SERVER_URL,
                         username=settings.KEYCLOAK_ADMIN,
                         password=settings.KEYCLOAK_ADMIN_PASSWORD,
-                        realm_name=settings.KEYCLOAK_REALM_NAME,
-                        user_realm_name=settings.KEYCLOAK_REALM_USER,
+                        realm_name="master",
+                        user_realm_name=settings.KEYCLOAK_REALM,
                         client_id=settings.KEYCLOAK_CLIENT_ID,
                         client_secret_key=settings.KEYCLOAK_CLIENT_SECRET,
-                        verify=True)
+                        verify=True
+                        )
 
 keycloak_admin = KeycloakAdmin(connection=keycloak_connection)
 

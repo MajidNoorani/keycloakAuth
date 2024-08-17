@@ -28,6 +28,8 @@ class UserInfoSerializer(serializers.Serializer):
     family_name = serializers.CharField()
     preferred_username = serializers.CharField()
     email = serializers.EmailField()
+    # custom fields
+    phone_number = serializers.CharField(required=False, allow_blank=True)
     profile_picture = serializers.SerializerMethodField()
 
     def get_profile_picture(self, obj):
@@ -40,6 +42,14 @@ class UserInfoSerializer(serializers.Serializer):
         except UserProfile.DoesNotExist:
             return None
 
+    def to_representation(self, obj):
+        # Use the default serialization
+        ret = super().to_representation(obj)
+
+        # Manually handle the phone_number field to ensure it's None if not provided
+        ret['phone_number'] = obj.get('phone_number', None)
+
+        return ret
 
 class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField(min_length=1)

@@ -126,6 +126,11 @@ def get_user_info(token):
         'given_name': 'Majid',
         'family_name': 'Noorani',
         'email': 'majid.noorani94@gmail.com'}
+
+
+    Note: To add new fields like phone number, after adding the attribute in
+    realm, you need to add client scope with mapper (with type default)
+    and add it to access token.
     """
     userinfo = keycloak_openid.userinfo(token)
     return userinfo
