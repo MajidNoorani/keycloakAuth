@@ -13,10 +13,12 @@ class KeycloakAuthentication(BaseAuthentication):
         access_token = auth_header.split()[1]
         try:
             userinfo = KC_openID_services.get_user_info(access_token)
-            return (userinfo, None)
+            user = KeycloakUser(userinfo)
+            return (user, None)
         except:
             raise AuthenticationFailed(
-                "Incorrect authentication credentials. Either the authehtication token is not valid or expired.")
+                "Incorrect authentication credentials. Either the authentication token is not valid or expired."
+            )
 
 
 class KeycloakAuthenticationScheme(OpenApiAuthenticationExtension):
@@ -46,3 +48,15 @@ class IsKeycloakAuthenticated(BasePermission):
             return True
         except:
             return False
+
+
+class KeycloakUser:
+    def __init__(self, userinfo):
+        self.userinfo = userinfo
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    def __getattr__(self, item):
+        return self.userinfo.get(item, None)

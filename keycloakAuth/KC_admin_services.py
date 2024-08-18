@@ -11,7 +11,7 @@ keycloak_connection = KeycloakOpenIDConnection(
                         server_url=settings.KEYCLOAK_SERVER_URL,
                         username=settings.KEYCLOAK_ADMIN,
                         password=settings.KEYCLOAK_ADMIN_PASSWORD,
-                        realm_name="master",
+                        realm_name=settings.KEYCLOAK_REALM,
                         user_realm_name=settings.KEYCLOAK_REALM,
                         client_id=settings.KEYCLOAK_CLIENT_ID,
                         client_secret_key=settings.KEYCLOAK_CLIENT_SECRET,
@@ -57,6 +57,34 @@ def get_userid_by_username(username: str):
 
 
 def get_user_by_id(user_id: str):
+    """_summary_
+
+    Args:
+        user_id (str): user id in keycloak
+
+    Returns:
+        Dict:
+        {'id': 'ea8ac5de-57d1-4784-ae7d-4a386b46cfcb',
+        'username': 'user1',
+        'firstName': 'SeyedMajid',
+        'lastName': 'user1',
+        'email': 'user1@example.com',
+        'emailVerified': True,
+        'attributes': {'phone': ['+1 (123) 456-7890']},
+        'createdTimestamp': 1723537611810,
+        'enabled': True,
+        'totp': False,
+        'disableableCredentialTypes': [],
+        'requiredActions': [],
+        'federatedIdentities': [],
+        'notBefore': 0,
+        'access': {'manageGroupMembership': True,
+                    'view': True,
+                    'mapRoles': True,
+                    'impersonate': True,
+                    'manage': True}
+        }
+        """
     return keycloak_admin.get_user(user_id)
 
 
