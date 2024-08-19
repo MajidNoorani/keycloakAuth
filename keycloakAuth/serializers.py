@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import UserProfile
+from typing import Union
 
 
 class TokenSerializer(serializers.Serializer):
@@ -32,7 +33,7 @@ class UserInfoSerializer(serializers.Serializer):
     phone_number = serializers.CharField(required=False, allow_blank=True)
     profile_picture = serializers.SerializerMethodField()
 
-    def get_profile_picture(self, obj):
+    def get_profile_picture(self, obj) -> Union[str, None]:
         try:
             user_profile = UserProfile.objects.get(uuid=obj['sub'])
             if user_profile.profilePicture and hasattr(user_profile.profilePicture, 'url'):
@@ -50,6 +51,7 @@ class UserInfoSerializer(serializers.Serializer):
         ret['phone_number'] = obj.get('phone_number', None)
 
         return ret
+
 
 class LogoutSerializer(serializers.Serializer):
     refresh_token = serializers.CharField(min_length=1)

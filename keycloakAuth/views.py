@@ -24,6 +24,9 @@ class KeycloakLoginView(GenericAPIView):
     def get_serializer_class(self):
         return None
 
+    def get_serializer(self, *args, **kwargs):
+        return None
+
     def get(self, request, *args, **kwargs):
         keycloak_auth_url = \
             f"{settings.KEYCLOAK_SERVER_URL}/realms/{settings.KEYCLOAK_REALM}/protocol/openid-connect/auth"  # noqa
@@ -142,6 +145,9 @@ class RefreshTokenView(GenericAPIView):
 class UpdateUserView(GenericAPIView):
     """Redirects user to keycloak for profile update."""
     def get_serializer_class(self):
+        return None
+
+    def get_serializer(self, *args, **kwargs):
         return None
 
     def get(self, request, *args, **kwargs):
