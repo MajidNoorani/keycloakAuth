@@ -21,12 +21,15 @@ class UserProfile(models.Model):
     profilePicture = models.ImageField(
         null=True,
         blank=True,
-        upload_to=user_profile_picture_file_path)
+        upload_to=user_profile_picture_file_path,
+        db_column="profilePicture")
     createdDate = models.DateTimeField(
         default=timezone.now,
-        verbose_name="Created Date"
+        verbose_name="Created Date",
+        db_column="createdDate"
         )
     updatedDate = models.DateTimeField(
         default=None,
-        null=True
+        null=True,
+        db_column="updatedDate"
         )
