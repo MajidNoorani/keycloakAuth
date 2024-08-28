@@ -24,7 +24,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'keycloakAuth.keycloakAuth.authentication.KeycloakAuthentication',
+        '<your_keycloakAuth_app_name>.keycloakAuth.authentication.KeycloakAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
        'rest_framework.parsers.FormParser',
@@ -45,6 +45,11 @@ SPECTACULAR_SETTINGS = {
         'keycloakAuth.authentication.KeycloakAuthenticationScheme',  # Update to actual import path
     ],
 }
+
+AUTHENTICATION_BACKENDS = [
+    '<your_keycloakAuth_app_name>.keycloakAuth.backend.KeycloakBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2000
@@ -112,3 +117,8 @@ After clonning the main project you need to use this command to get submodules t
 ```
 git submodule update --init
 ```
+
+
+
+# KEYCLOAK app setup
+Add 2 roles to the client named **superuser** and **staff** and assign these roles to admin users which need to have access to admin panel.
