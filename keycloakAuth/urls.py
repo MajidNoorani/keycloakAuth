@@ -7,7 +7,7 @@ from .views import (
     RefreshTokenView,
     LogOutView,
     SimpleLoginView,
-    UserProfileView
+    UserProfileViewSet
 )
 from rest_framework.routers import DefaultRouter
 
@@ -36,7 +36,7 @@ urlpatterns = [
 ]
 
 router = DefaultRouter()
-router.register('user-profile', UserProfileView)
+router.register('user-profile', UserProfileViewSet)
 
 app_name = 'kc_auth'
 

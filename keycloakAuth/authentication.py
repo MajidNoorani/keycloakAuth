@@ -1,6 +1,6 @@
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from . import KC_openID_services
+from . import kc_openID_services
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 from rest_framework.permissions import BasePermission
 
@@ -12,7 +12,7 @@ class KeycloakAuthentication(BaseAuthentication):
             return None
         access_token = auth_header.split()[1]
         try:
-            userinfo = KC_openID_services.get_user_info(access_token)
+            userinfo = kc_openID_services.get_user_info(access_token)
             user = KeycloakUser(userinfo)
             return (user, None)
         except:
@@ -43,7 +43,7 @@ class IsKeycloakAuthenticated(BasePermission):
         access_token = auth_header.split()[1]
 
         try:
-            userinfo = KC_openID_services.get_user_info(access_token)
+            userinfo = kc_openID_services.get_user_info(access_token)
             # Add additional permission checks if needed
             return True
         except:

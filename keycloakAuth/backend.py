@@ -1,6 +1,6 @@
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth import get_user_model
-from .KC_openID_services import get_token_with_user_and_pass, decode_token
+from .kc_openID_services import get_token_with_user_and_pass, decode_token
 from django.conf import settings
 
 
